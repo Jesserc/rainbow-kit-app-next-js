@@ -1,9 +1,22 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import type { NextPage } from "next";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 const Home: NextPage = () => {
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
+  if (isConnected) {
+    console.log("true");
+  } else {
+    console.log("false");
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,15 +32,13 @@ const Home: NextPage = () => {
         <ConnectButton />
 
         <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
+          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{" "}
           <a href="https://nextjs.org">Next.js!</a>
         </h1>
-
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
-
         <div className={styles.grid}>
           <a href="https://rainbowkit.com" className={styles.card}>
             <h2>RainbowKit Documentation &rarr;</h2>
